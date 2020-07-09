@@ -8,28 +8,52 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
 
 
+def buget_assembly(buget):
+    total_buget = 0
+    for i in buget:
+        total_buget += i.amount
+    return total_buget
+
+
+def spendings_assembly(spendings):
+    total_spendings = 0
+    for i in spendings:
+        total_spendings += i.amount
+    return total_spendings
+
+
+def spendings_percentages_of_buget(buget, spendings):
+    spendings_percent = 0
+    if buget > 0:
+        spendings_percent = round((spendings / buget) * 100, 2)
+    return spendings_percent
+
+
+def savings_percentages_of_buget(buget, savings):
+    savings_percent = 0
+    if buget > 0:
+        savings_percent = round((savings / buget) * 100, 2)
+    return savings_percent
+
+
 @login_required
 def dashboard(request):
     buget = Buget.objects.filter(user=request.user)
     spendings = Spending.objects.filter(user=request.user)
-    total_buget, total_spendings = 0, 0
-    for i in buget:
-        total_buget += i.amount
-    for i in spendings:
-        total_spendings += i.amount
+    total_buget = buget_assembly(buget)
+    total_spendings = spendings_assembly(spendings)
     total_savings = total_buget - total_spendings
-    spendings_percent, savings_percent = 0, 0
-    if total_buget > 0:
-        spendings_percent = round((total_spendings / total_buget) * 100, 2)
-        savings_percent = round((total_savings / total_buget) * 100, 2)
+    spendings_percent = spendings_percentages_of_buget(
+        total_buget, total_spendings)
+    savings_percent = savings_percentages_of_buget(total_buget, total_savings)
     context = {
         'title': 'Dashboard',
         'total_spendings': total_spendings,
         'total_buget': total_buget,
         'total_savings': total_savings,
-        'spendings': spendings,
         'spendings_percent': spendings_percent,
         'savings_percent': savings_percent,
+        'spendings': spendings,
         'buget': buget,
     }
     return render(request, 'users/dashboard.html', context)
