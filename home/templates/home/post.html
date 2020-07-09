@@ -1,0 +1,40 @@
+{% extends 'home/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<div class="container">
+		<h2 class="center-text-content">{{ post.title }}</h2>
+		<hr>
+		<article class="media-content-section">
+			<div class="media-body">
+				<div class="article-metadata">
+					<p class="center-text-content">{{ post.content }}</p>
+				</div>
+			</div>
+		</article>
+		<br>
+		<form method="POST" action="{% url 'post' post.id %}">
+			{% csrf_token %}
+			<h6><em><label for="comment">Comment Text*</label></em></h6>
+			<textarea id="comment" rows="8" cols="111" name="comment_text"></textarea>
+			<input type="submit" name="post_comment" class="btn btn-primary" value="Post Comment">
+		</form>
+		<hr>
+		<br>
+		{% for comment in comments %}
+			<article class="media content-section">
+			  <div class="media-body">
+			    <div class="article-metadata">
+			      <a class="mr-2" href="#">{{ comment.user.username }}</a>
+			      <small class="text-muted">{{ comment.date_posted|date:"F d, Y" }}</small>
+			    </div>
+			    <p class="article-content">{{ comment.comment_text }}</p>
+			    {% ifequal comment.user request.user %}
+			    	<a href="{% url 'delete_comment' comment.id %}" class="btn btn-sm btn-danger">Delete</a>
+			    	<a href="{% url 'update_comment' comment.id %}" class="btn btn-sm btn-success">Modify</a>
+			    {% endifequal %}
+			  </div>
+			</article>
+		{% endfor %}
+		<br>
+	</div>
+{% endblock content %}

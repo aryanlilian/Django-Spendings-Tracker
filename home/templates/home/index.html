@@ -1,0 +1,33 @@
+{% extends 'home/base.html'%}
+{% block content %}
+	<style type="text/css">
+		body {
+			background-image: url("media/index_background.jpg");
+			background-size: 1920px 1165px;
+		}
+
+		.index-text-color {
+		  color: #F8F8FF;
+		  text-shadow: 30px 30px 120px black;
+		}
+
+		.index-hr-color {
+		  background-color: #F8F8FF;
+		}
+
+		.jumbotron-main-class {
+			text-align: center;
+			margin-top: 17rem;
+		}
+	</style>
+	<div class="jumbotron-main-class">
+		<div class="container">
+		  <h1 class="display-4 index-text-color">Manage your money better</h1>
+		  <div class="container">
+			<p class="font-change index-text-color"><strong>With us is much easier to manage your money and make a lot of savings.</strong></p>
+		</div>
+		  <hr class="my-4 index-hr-color">
+		  <a class="btn btn-outline-light btn-lg" href="{% url 'register' %}" role="button">Start now</a>
+		</div>
+	</div>
+{% endblock %}

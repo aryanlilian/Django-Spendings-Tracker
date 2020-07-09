@@ -1,0 +1,21 @@
+{% extends 'home/base.html' %}
+{% block content %}
+	<div class="container">
+		<h2 class="center-text-content">{{ title }}</h2>
+		<hr>
+		{% for post in posts %}
+			<article class="media content-section">
+			  <div class="media-body">
+			    <div class="article-metadata">
+			      <a class="mr-2" href="#">{{ post.author }} | <em>Admin</em></a>
+			      <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+			    </div>
+			    <h2><a class="article-title" href="{% url 'post' post.id %}">{{ post.title }}</a></h2>
+			    <a href="{% url 'post' post.id %}" class="btn btn-primary">Read It</a>
+			  </div>
+			</article>
+			<hr>
+			<br>
+		{% endfor %}
+	</div>
+{% endblock %}

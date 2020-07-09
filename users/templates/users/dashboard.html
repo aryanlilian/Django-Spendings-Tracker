@@ -1,0 +1,142 @@
+{% extends 'home/base.html' %}
+{% block content %}
+	<div class="container">
+		<h2 class="center-text-content">{{ title }}</h2>
+		<hr>
+		<div class="row">
+			<div class="col">
+				<div class="col-md">
+					<div class="card text-center text-white  mb-3" id="buget">
+					  	<div class="card-header">
+					  		{% for sum in buget %}
+					  		<h5 class="card-title" id="blue-color">Buget ({{ sum.currency }})</h5>
+					  		{% endfor %}
+					  	</div>
+					  	<div class="card-body">
+					    	<h3 class="card-title" id="blue-color">{{ total_buget }}</h3>
+					  	</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col">
+				<div class="col-md">
+					<div class="card text-center text-white  mb-3" id="spendings">
+					  	<div class="card-header">
+					  		{% for sum in buget %}
+					  		<h5 class="card-title" id="red-color">Spendings ({{ sum.currency }})</h5>
+					  		{% endfor %}
+					  	</div>
+					  	<div class="card-body">
+					  		{% if total_spendings == 0 %}
+					  			<h3 class="card-title" id="red-color">0.0</h3>
+					  		{% else %}
+					    		<h3 class="card-title" id="red-color">{{ total_spendings }}</h3>
+					  		{% endif %}
+					  	</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col">
+				<div class="col-md">
+					<div class="card text-center text-white  mb-3" id="savings">
+					  	<div class="card-header">
+					  		{% for sum in buget %}
+					  		<h5 class="card-title" id="green-color">Savings ({{ sum.currency }})</h5>
+					  		{% endfor %}
+					  	</div>
+					  	<div class="card-body">
+					    	<h3 class="card-title" id="green-color">{{ total_savings }}</h3>
+					  	</div>
+					</div>
+				</div>
+			</div>
+		</div> 
+		<hr>
+		<form id="form-center" action="{% url 'create_spending' %}" method="POST">
+			{% csrf_token %}
+			<div class="form-row">
+			    <div class="form-group col-md-4">
+			      <input type="text" class="form-control" name="spending_name" placeholder="Spending name">
+			    </div>
+			    <div class="form-group col-md-3">
+			      <input type="text" class="form-control" name="amount" placeholder="Amount">
+			    </div>
+			    <div class="form-group col-md-3">
+			      <select name="category" class="form-control">
+			        	<option value="Groceries">Groceries</option>
+						<option value="Shopping">Shopping</option>
+						<option value="Rent">Rent</option>
+						<option value="Invoices">Invoices</option>
+						<option value="Others">Others</option>
+			      </select>
+			    </div>
+			    <div class="form-group col-md-2">
+			    	<input type="submit" class="btn btn-primary" value="Add Spending">
+			    </div>
+			  </div>
+		</form>
+		<br>
+		<div class="row">
+			<div class="col">
+				<h4>Spendings List</h4>
+				<hr>
+				<table class="table table-hover">
+					<thead class="thead-dark">
+						<tr>
+							{% for sum in buget %}
+							<th>Name</th>
+							<th>Category</th>
+							<th>Amount ({{ sum.currency }})</th>
+							<th>Date Created</th>
+							<th>Remove</th>
+							{% endfor %}
+						</tr>
+					</thead>
+					{% for spending in spendings %}
+						<tr>
+							<td>{{ spending.name }}</td>
+							<td>{{ spending.category }}</td>
+							<td>{{ spending.amount }}</td>
+							<td>{{ spending.date_created|date:"F-d-Y" }}</td>
+							<td>
+								<a class="btn btn-sm btn-danger" href="{% url 'delete_spending' spending.id %}">Delete</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</table>
+			</div>
+			<div class="col">
+				<h4>Percentages of Buget</h4>
+				<hr>
+				<table class="table">
+				  <thead class="thead-dark">
+				    <tr>
+				      <th scope="col">Name</th>
+				      <th scope="col">Percentages</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr>
+				      <th scope="row">Spendings</th>
+				      <td>
+				      	<div class="progress">
+						  <div class="progress-bar bg-warning" role="progressbar" style="width: {{ spendings_percent }}%;" aria-valuenow="{{ spendings_percent }}" aria-valuemin="0" aria-valuemax="100">{{ spendings_percent }}%</div>
+						</div>
+				      </td>
+				    </tr>
+				    <tr>
+				      <th scope="row">Savings</th>
+				      <td>
+				      	<div class="progress">
+						  <div class="progress-bar bg-success" role="progressbar" style="width: {{ savings_percent }}%;" aria-valuenow="{{ savings_percent }}" aria-valuemin="0" aria-valuemax="100">{{ savings_percent }}%</div>
+						</div>
+				      </td>
+				    </tr>
+				  </tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}
