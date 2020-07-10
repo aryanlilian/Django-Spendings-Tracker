@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'money_tracker.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "", #informatii private
-        "USER": "", #informatii private
-        "PASSWORD": "", #informatii private
+        "NAME": "",
+        "USER": "",
+        "PASSWORD": "",
         "HOST": "localhost",
         "PORT": "5432",
     }
@@ -145,6 +145,6 @@ EMAIL_PORT = 587
 
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = #informatii confidentiale
+EMAIL_HOST_USER = ''
 
-EMAIL_HOST_PASSWORD = #informatii confidentiale
+EMAIL_HOST_PASSWORD = ''

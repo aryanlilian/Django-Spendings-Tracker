@@ -33,5 +33,5 @@ def create_saving(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=User)
-def save_profile(sender, instance, **kwargs):
+def save_saving(sender, instance, **kwargs):
     instance.saving.save()

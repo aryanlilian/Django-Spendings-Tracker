@@ -87,7 +87,7 @@ def profile(request):
 
 
 @unauthenticated_user
-def loginPage(request):
+def login_page(request):
     if request.method == 'POST':
         user = authenticate(
             username=request.POST['username'], password=request.POST['password'])
@@ -100,7 +100,7 @@ def loginPage(request):
 
 
 @unauthenticated_user
-def registerPage(request):
+def register_page(request):
     form = CreateUserForm()
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
@@ -113,7 +113,7 @@ def registerPage(request):
     return render(request, 'users/register.html', context)
 
 
-def logoutPage(request):
+def logout_page(request):
     logout(request)
     return render(request, 'users/logout.html', {'title': 'Logout'})
 
