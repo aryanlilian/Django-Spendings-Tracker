@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'users.apps.UsersConfig',
+    'blog.apps.BlogConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -79,9 +80,9 @@ WSGI_APPLICATION = 'money_tracker.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "",
-        "USER": "",
-        "PASSWORD": "",
+        "NAME": "money_tracker_db",
+        "USER": "postgres",
+        "PASSWORD": "voifimilionar",
         "HOST": "localhost",
         "PORT": "5432",
     }
@@ -145,6 +146,6 @@ EMAIL_PORT = 587
 
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = ''
+EMAIL_HOST_USER = 'cryaryan@gmail.com'
 
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = 'xfosarjrlbhlurxy'
