@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'home.apps.HomeConfig',
+    'index.apps.IndexConfig',
     'users.apps.UsersConfig',
     'blog.apps.BlogConfig',
     'crispy_forms',
