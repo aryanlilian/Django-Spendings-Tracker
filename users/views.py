@@ -5,7 +5,7 @@ from .forms import CreateUserForm, UserUpdateForm, ProfileUpdateForm, BugetForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .decorators import unauthenticated_user
+from .decorators import is_authenticated
 
 
 def buget_assembly(buget):
@@ -86,7 +86,7 @@ def profile(request):
     return render(request, 'users/profile.html', context)
 
 
-@unauthenticated_user
+@is_authenticated
 def login_page(request):
     if request.method == 'POST':
         user = authenticate(
@@ -99,7 +99,7 @@ def login_page(request):
     return render(request, 'users/login.html')
 
 
-@unauthenticated_user
+@is_authenticated
 def register_page(request):
     form = CreateUserForm()
     if request.method == 'POST':
