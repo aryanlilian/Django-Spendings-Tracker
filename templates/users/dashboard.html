@@ -1,4 +1,4 @@
-{% extends 'index/base.html' %}
+{% extends 'blog/base.html' %}
 {% block content %}
 	<div class="container">
 		<h2 class="center-text-content">{{ title }}</h2>
@@ -54,7 +54,7 @@
 			</div>
 		</div> 
 		<hr>
-		<form id="form-center" action="{% url 'create_spending' %}" method="POST">
+		<form id="form-center" action="{% url 'create-spending' %}" method="POST">
 			{% csrf_token %}
 			<div class="form-row">
 			    <div class="form-group col-md-4">
@@ -101,7 +101,7 @@
 							<td>{{ spending.amount }}</td>
 							<td>{{ spending.date_created|date:"F-d-Y" }}</td>
 							<td>
-								<a class="btn btn-sm btn-danger" href="{% url 'delete_spending' spending.id %}">Delete</a>
+								<a class="btn btn-sm btn-danger" href="{% url 'delete-spending' spending.id %}">Delete</a>
 							</td>
 						</tr>
 					{% endfor %}

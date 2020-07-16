@@ -4,6 +4,10 @@ from .forms import CommentForm
 from django.contrib.auth.decorators import login_required
 
 
+def index(request):
+    return render(request, 'blog/index.html')
+
+
 @login_required
 def blog(request):
     context = {
