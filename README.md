@@ -8,24 +8,24 @@ The dashboard page is the page where you can add every time you want personalize
 The Blog-Page is a page where you can read a lot of posts about money or how to manage them better and make savings, investments, etc. Also on this page for every post, you can write a comment and discuss it with other users on the website. 
 
 Index-Page:
-![](project-images/index.png)
+![](README-images/index.png)
 
 Register-Page:
-![](project-images/register.png)
+![](README-images/register.png)
 
 Login-Page:
-![](project-images/login.png)
+![](README-images/login.png)
 
 Profile-Page:
-![](project-images/profile.png)
+![](README-images/profile.png)
 
 Dashboard-Page:
-![](project-images/dashboard.png)
+![](README-images/dashboard.png)
 
 Blog-Page:
-![](project-images/blog.png)
+![](README-images/blog.png)
 
 Post-Page:
-![](project-images/post.png)
+![](README-images/post.png)
 
 
