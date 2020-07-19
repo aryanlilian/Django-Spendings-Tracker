@@ -8,12 +8,12 @@
 				<div class="col-md">
 					<div class="card text-center text-white  mb-3" id="buget">
 					  	<div class="card-header">
-					  		{% for sum in buget %}
-					  		<h5 class="card-title" id="blue-color">Buget ({{ sum.currency }})</h5>
+					  		{% for sum in budget %}
+					  		<h5 class="card-title" id="blue-color">Budget ({{ sum.currency }})</h5>
 					  		{% endfor %}
 					  	</div>
 					  	<div class="card-body">
-					    	<h3 class="card-title" id="blue-color">{{ total_buget }}</h3>
+					    	<h3 class="card-title" id="blue-color">{{ total_budget }}</h3>
 					  	</div>
 					</div>
 				</div>
@@ -23,7 +23,7 @@
 				<div class="col-md">
 					<div class="card text-center text-white  mb-3" id="spendings">
 					  	<div class="card-header">
-					  		{% for sum in buget %}
+					  		{% for sum in budget %}
 					  		<h5 class="card-title" id="red-color">Spendings ({{ sum.currency }})</h5>
 					  		{% endfor %}
 					  	</div>
@@ -42,7 +42,7 @@
 				<div class="col-md">
 					<div class="card text-center text-white  mb-3" id="savings">
 					  	<div class="card-header">
-					  		{% for sum in buget %}
+					  		{% for sum in budget %}
 					  		<h5 class="card-title" id="green-color">Savings ({{ sum.currency }})</h5>
 					  		{% endfor %}
 					  	</div>
@@ -85,7 +85,7 @@
 				<table class="table table-hover">
 					<thead class="thead-dark">
 						<tr>
-							{% for sum in buget %}
+							{% for sum in budget %}
 							<th>Name</th>
 							<th>Category</th>
 							<th>Amount ({{ sum.currency }})</th>

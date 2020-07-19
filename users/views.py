@@ -1,18 +1,18 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .models import *
-from .forms import CreateUserForm, UserUpdateForm, ProfileUpdateForm, BugetForm
+from .forms import CreateUserForm, UserUpdateForm, ProfileUpdateForm, BudgetForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import is_authenticated
 
 
-def buget_assembly(buget):
-    total_buget = 0
-    for i in buget:
-        total_buget += i.amount
-    return total_buget
+def budget_assembly(budget):
+    total_budget = 0
+    for i in budget:
+        total_budget += i.amount
+    return total_budget
 
 
 def spendings_assembly(spendings):
@@ -22,39 +22,39 @@ def spendings_assembly(spendings):
     return total_spendings
 
 
-def spendings_percentages_of_buget(buget, spendings):
+def spendings_percentages_of_buget(budget, spendings):
     spendings_percent = 0
-    if buget > 0:
-        spendings_percent = round((spendings / buget) * 100, 2)
+    if budget > 0:
+        spendings_percent = round((spendings / budget) * 100, 2)
     return spendings_percent
 
 
-def savings_percentages_of_buget(buget, savings):
+def savings_percentages_of_buget(budget, savings):
     savings_percent = 0
-    if buget > 0:
-        savings_percent = round((savings / buget) * 100, 2)
+    if budget > 0:
+        savings_percent = round((savings / budget) * 100, 2)
     return savings_percent
 
 
 @login_required
 def dashboard(request):
-    buget = Buget.objects.filter(user=request.user)
+    budget = Budget.objects.filter(user=request.user)
     spendings = Spending.objects.filter(user=request.user)
-    total_buget = buget_assembly(buget)
+    total_budget = budget_assembly(budget)
     total_spendings = spendings_assembly(spendings)
-    total_savings = total_buget - total_spendings
+    total_savings = total_budget - total_spendings
     spendings_percent = spendings_percentages_of_buget(
-        total_buget, total_spendings)
-    savings_percent = savings_percentages_of_buget(total_buget, total_savings)
+        total_budget, total_spendings)
+    savings_percent = savings_percentages_of_buget(total_budget, total_savings)
     context = {
         'title': 'Dashboard',
         'total_spendings': total_spendings,
-        'total_buget': total_buget,
+        'total_budget': total_budget,
         'total_savings': total_savings,
         'spendings_percent': spendings_percent,
         'savings_percent': savings_percent,
         'spendings': spendings,
-        'buget': buget,
+        'budget': budget,
     }
     return render(request, 'users/dashboard.html', context)
 
@@ -62,23 +62,23 @@ def dashboard(request):
 @login_required
 def profile(request):
     if request.method == 'POST':
-        buget_form = BugetForm(request.POST, instance=request.user.buget)
+        budget_form = BudgetForm(request.POST, instance=request.user.budget)
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,
                                    request.FILES,
                                    instance=request.user.profile)
-        if u_form.is_valid() and p_form.is_valid() and buget_form.is_valid():
-            buget_form.save()
+        if u_form.is_valid() and p_form.is_valid() and budget_form.is_valid():
+            budget_form.save()
             u_form.save()
             p_form.save()
             return redirect('profile')
     else:
-        buget_form = BugetForm(instance=request.user.buget)
+        budget_form = BudgetForm(instance=request.user.budget)
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
 
     context = {
-        'buget_form': buget_form,
+        'budget_form': budget_form,
         'u_form': u_form,
         'p_form': p_form,
         'title': 'Profile'

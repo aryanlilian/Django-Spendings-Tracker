@@ -11,7 +11,7 @@ class Profile(models.Model):
         return f'{self.user.username} Profile'
 
 
-class Buget(models.Model):
+class Budget(models.Model):
     CURRENCY = (
         ('USD', 'USD'),
         ('EUR', 'EUR'),
@@ -25,7 +25,7 @@ class Buget(models.Model):
         max_length=100, choices=CURRENCY, default='USD')
 
     def __str__(self):
-        return f'{self.user.username} Buget'
+        return f'{self.user.username} Budget'
 
 
 class Spending(models.Model):

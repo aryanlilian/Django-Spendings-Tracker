@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Profile, Buget
+from .models import Profile, Budget
 
 
 class CreateUserForm(UserCreationForm):
@@ -27,7 +27,7 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ['image']
 
 
-class BugetForm(forms.ModelForm):
+class BudgetForm(forms.ModelForm):
     class Meta:
-        model = Buget
+        model = Budget
         exclude = ['user']
