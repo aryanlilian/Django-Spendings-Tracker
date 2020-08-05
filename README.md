@@ -1,4 +1,4 @@
-# Spendings-Tracker-Web-App
+# Electronic-Spendings-Tracker
 I've built this website because I want to help a lot of people to manage their funds more efficiently and to have a lot of savings every month, in order to start some small business or make a lot of investments. 
 
 The website has a Profile-Page where you can set some personal information and you're personally budget and the currency of your personal wallet on the site. 
