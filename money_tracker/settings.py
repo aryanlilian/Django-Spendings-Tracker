@@ -138,6 +138,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+LOGIN_URL = 'login'
+
+LOGIN_REDIRECT_URL = 'profile'
+
 # Password reset through email settings
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from .models import *
 from .forms import CreateUserForm, UserUpdateForm, ProfileUpdateForm, BudgetForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import is_authenticated
 
@@ -87,19 +86,6 @@ def profile(request):
 
 
 @is_authenticated
-def login_page(request):
-    if request.method == 'POST':
-        user = authenticate(
-            username=request.POST['username'], password=request.POST['password'])
-        if user is not None:
-            login(request, user)
-            return redirect('profile')
-        else:
-            messages.info(request, 'username or password is incorrect')
-    return render(request, 'users/login.html')
-
-
-@is_authenticated
 def register_page(request):
     form = CreateUserForm()
     if request.method == 'POST':
@@ -111,11 +97,6 @@ def register_page(request):
             return redirect('login')
     context = {'form': form}
     return render(request, 'users/register.html', context)
-
-
-def logout_page(request):
-    logout(request)
-    return render(request, 'users/logout.html', {'title': 'Logout'})
 
 
 def create_spending(request):
