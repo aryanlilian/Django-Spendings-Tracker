@@ -39,9 +39,9 @@ def savings_percentages_of_buget(budget, savings):
 def dashboard(request):
     budget = Budget.objects.filter(user=request.user)
     spendings = Spending.objects.filter(user=request.user)
-    total_budget = budget_assembly(budget)
-    total_spendings = spendings_assembly(spendings)
-    total_savings = total_budget - total_spendings
+    total_budget = round(budget_assembly(budget), 2)
+    total_spendings = round(spendings_assembly(spendings), 2)
+    total_savings = round(total_budget - total_spendings, 2)
     spendings_percent = spendings_percentages_of_buget(
         total_budget, total_spendings)
     savings_percent = savings_percentages_of_buget(total_budget, total_savings)
@@ -70,6 +70,7 @@ def profile(request):
             budget_form.save()
             u_form.save()
             p_form.save()
+            messages.success(request, f'Your account has been updated!')
             return redirect('profile')
     else:
         budget_form = BudgetForm(instance=request.user.budget)
@@ -95,7 +96,10 @@ def register_page(request):
             user = form.cleaned_data.get('username')
             messages.success(request, 'Account was created for ' + user)
             return redirect('login')
-    context = {'form': form}
+    context = {
+        'form': form,
+        'title': 'Register',
+    }
     return render(request, 'users/register.html', context)
 
 
