@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Profile, Budget
+from .models import Profile, Budget, Task
 
 
 class CreateUserForm(UserCreationForm):
@@ -44,3 +44,9 @@ class BudgetForm(forms.ModelForm):
     class Meta:
         model = Budget
         exclude = ['user']
+
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        exclude = ['note']

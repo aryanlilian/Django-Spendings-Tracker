@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+	<div class="container">
+		<br>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card card-body">
+					<p>Are you sure you want to delete "{{ note }}"?</p>
+					<form action="{% url 'delete-note' note.id  %}" method="POST">
+						{% csrf_token %}
+						<a class="btn btn-warning" href="{% url 'notes' %}">Cancel</a>
+						<input class="btn btn-danger" type="submit" name="Confirm" value="Delete">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock content %}

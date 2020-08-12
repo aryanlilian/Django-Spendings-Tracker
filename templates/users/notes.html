@@ -1,0 +1,41 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+	<div class="container">
+		<form action="{% url 'create-note' %}" method="POST">
+			{% csrf_token %}
+			<div class="form-row">
+			    <div class="form-group col-md-4">
+			      <input type="text" class="form-control" name="note_title" placeholder="Note title">
+			    </div>
+			    <div class="form-group col-md-3">
+			      <select name="category" class="form-control">
+			        	<option value="Groceries">Groceries</option>
+						<option value="Shopping">Shopping</option>
+						<option value="Invoices">Invoices</option>
+						<option value="Others">Others</option>
+			      </select>
+			    </div>
+			    <div class="form-group col-md-2">
+			    	<input type="submit" class="btn btn-success" value="Create Note">
+			    </div>
+			  </div>
+		</form>
+		<div class="row">
+			{% for note in notes %}
+				<div class="col-lg-6">
+					<div class="col-md-6">
+						<div class="card text-center text-white bg-info mb-3" style="max-width: 18rem;">
+						  <div class="card-header">{{ note.category }}</div>
+						  <div class="card-body">
+						    <h5 class="card-title">{{ note.title }}</h5>
+						    <p class="card-text">{{ note.date_created|date:"F d, Y"}}</p>
+						    <a class="btn btn-warning" href="{% url 'tasks' note.id %}">View</a>
+						    <a class="btn btn-outline-danger" href="{% url 'delete-note' note.id %}">Delete</a>
+						  </div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock content %}

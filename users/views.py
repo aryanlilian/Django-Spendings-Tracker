@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .models import *
-from .forms import CreateUserForm, UserUpdateForm, ProfileUpdateForm, BudgetForm
+from .forms import CreateUserForm, UserUpdateForm, ProfileUpdateForm, BudgetForm, TaskForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .decorators import is_authenticated
@@ -59,6 +59,30 @@ def dashboard(request):
 
 
 @login_required
+def notes(request):
+    notes = Note.objects.filter(user=request.user)
+    context = {
+        'title': 'Notes',
+        'notes': notes,
+    }
+    return render(request, 'users/notes.html', context)
+
+
+@login_required
+def tasks(request, pk):
+    note = Note.objects.get(id=pk)
+    tasks = Task.objects.filter(note=note)
+    if request.method == 'POST':
+        title = request.POST['task_text']
+        create_task(request, pk, title)
+    context = {
+        'title': 'Tasks',
+        'tasks': tasks,
+    }
+    return render(request, 'users/tasks.html', context)
+
+
+@login_required
 def profile(request):
     if request.method == 'POST':
         budget_form = BudgetForm(request.POST, instance=request.user.budget)
@@ -81,7 +105,7 @@ def profile(request):
         'budget_form': budget_form,
         'u_form': u_form,
         'p_form': p_form,
-        'title': 'Profile'
+        'title': 'Profile',
     }
     return render(request, 'users/profile.html', context)
 
@@ -103,12 +127,14 @@ def register_page(request):
     return render(request, 'users/register.html', context)
 
 
+@login_required
 def create_spending(request):
     Spending.objects.create(user=request.user, name=request.POST['spending_name'],
                             category=request.POST['category'], amount=request.POST['amount'])
     return redirect('dashboard')
 
 
+@login_required
 def delete_spending(request, pk):
     spending = Spending.objects.get(id=pk)
     if request.method == 'POST':
@@ -117,4 +143,61 @@ def delete_spending(request, pk):
     context = {
         'item': spending
     }
-    return render(request, 'users/delete.html', context)
+    return render(request, 'users/delete_spending.html', context)
+
+
+@login_required
+def create_note(request):
+    Note.objects.create(
+        user=request.user, title=request.POST['note_title'], category=request.POST['category'])
+    return redirect('notes')
+
+
+@login_required
+def delete_note(request, pk):
+    note = Note.objects.get(id=pk)
+    if request.method == 'POST':
+        note.delete()
+        return redirect('notes')
+    context = {
+        'note': note,
+    }
+    return render(request, 'users/delete_note.html', context)
+
+
+@login_required
+def create_task(request, pk, title):
+    note = Note.objects.get(id=pk)
+    Task.objects.create(note=note, title=title)
+    return redirect('tasks', pk)
+
+
+@login_required
+def update_task(request, pk):
+    task = Task.objects.get(id=pk)
+    note_id = task.note.id
+    form = TaskForm(instance=task)
+    if request.method == 'POST':
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+        return redirect('tasks', note_id)
+    context = {
+        'form': form,
+        'id': note_id,
+    }
+    return render(request, 'users/update_task.html', context)
+
+
+@login_required
+def delete_task(request, pk):
+    task = Task.objects.get(id=pk)
+    note_id = task.note.id
+    if request.method == 'POST':
+        task.delete()
+        return redirect('tasks', note_id)
+    context = {
+        'task': task,
+        'id': note_id,
+    }
+    return render(request, 'users/delete_task.html', context)
