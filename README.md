@@ -28,4 +28,10 @@ Blog-Page:
 Post-Page:
 ![](README-images/post.png)
 
+Notes-Page:
+![](README-images/notes.png)
+
+Tasks-Page:
+![](README-images/tasks.png)
+
 
