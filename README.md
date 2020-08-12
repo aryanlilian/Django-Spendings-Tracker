@@ -7,6 +7,8 @@ The dashboard page is the page where you can add every time you want personalize
 
 The Blog-Page is a page where you can read a lot of posts about money or how to manage them better and make savings, investments, etc. Also on this page for every post, you can write a comment and discuss it with other users on the website. 
 
+Recently I've added a new feature that consists of making notes list and every list has a specific name, user, and a category. Every user can add as many tasks he/she wants in their list, every list and task has a full CRUD feature available.
+
 Index-Page:
 ![](README-images/index.png)
 
