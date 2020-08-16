@@ -8,12 +8,16 @@
 				<div class="col-md">
 					<div class="card text-center text-white  mb-3" id="buget">
 					  	<div class="card-header">
-					  		{% for sum in budget %}
-					  		<h5 class="card-title" id="blue-color">Budget ({{ sum.currency }})</h5>
+					  		{% for sum in currency %}
+					  			<h5 class="card-title" id="blue-color">Budget ({{ sum.currency }})</h5>
 					  		{% endfor %}
 					  	</div>
 					  	<div class="card-body">
-					    	<h3 class="card-title" id="blue-color">{{ total_budget }}</h3>
+					  		{% if total_budget %}
+					    		<h3 class="card-title" id="blue-color">{{ total_budget }}</h3>
+					  		{% else %}
+					  			<h3 class="card-title" id="blue-color">0.0</h3>
+					  		{% endif %}
 					  	</div>
 					</div>
 				</div>
@@ -22,8 +26,8 @@
 				<div class="col-md">
 					<div class="card text-center text-white  mb-3" id="spendings">
 					  	<div class="card-header">
-					  		{% for sum in budget %}
-					  		<h5 class="card-title" id="red-color">Spendings ({{ sum.currency }})</h5>
+					  		{% for sum in currency %}
+					  			<h5 class="card-title" id="red-color">Spendings ({{ sum.currency }})</h5>
 					  		{% endfor %}
 					  	</div>
 					  	<div class="card-body">
@@ -40,12 +44,16 @@
 				<div class="col-md">
 					<div class="card text-center text-white  mb-3" id="savings">
 					  	<div class="card-header">
-					  		{% for sum in budget %}
-					  		<h5 class="card-title" id="green-color">Savings ({{ sum.currency }})</h5>
-					  		{% endfor %}
+					  		{% for sum in currency %}
+					  			<h5 class="card-title" id="green-color">Savings ({{ sum.currency }})</h5>
+					  		{% endfor%}
 					  	</div>
 					  	<div class="card-body">
-					    	<h3 class="card-title" id="green-color">{{ total_savings }}</h3>
+					  		{% if total_savings %}
+					    		<h3 class="card-title" id="green-color">{{ total_savings }}</h3>
+					  		{% else %}
+					  			<h3 class="card-title" id="green-color">0.0</h3>
+					  		{% endif %}
 					  	</div>
 					</div>
 				</div>
@@ -71,7 +79,18 @@
 			      </select>
 			    </div>
 			    <div class="form-group col-md-2">
-			    	<input type="submit" class="btn btn-primary" value="Add Spending">
+			    	<input type="submit" class="btn btn-warning" value="Add Spending">
+			    </div>
+			  </div>
+		</form>
+		<form id="form-center" action="{% url 'add-budget' %}" method="POST">
+			{% csrf_token %}
+			<div class="form-row">
+			    <div class="form-group col-md-10">
+			      <input type="text" class="form-control" name="budget_amount" placeholder="Amount">
+			    </div>
+			    <div class="form-group col-md-2">
+			    	<input type="submit" class="btn btn-primary" value="Add Budget">
 			    </div>
 			  </div>
 		</form>
@@ -83,12 +102,12 @@
 				<table class="table table-hover">
 					<thead class="thead-dark">
 						<tr>
-							{% for sum in budget %}
-							<th>Name</th>
-							<th>Category</th>
-							<th>Amount ({{ sum.currency }})</th>
-							<th>Date Created</th>
-							<th>Remove</th>
+							{% for sum in currency %}
+								<th>Name</th>
+								<th>Category</th>
+								<th>Amount ({{ sum.currency }})</th>
+								<th>Date Created</th>
+								<th>Remove</th>
 							{% endfor %}
 						</tr>
 					</thead>

@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .models import *
-from .forms import CreateUserForm, UserUpdateForm, ProfileUpdateForm, BudgetForm, TaskForm
+from .forms import CreateUserForm, UserUpdateForm, ProfileUpdateForm, CurrencyForm, TaskForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .decorators import is_authenticated
+from datetime import datetime
 
 
 def budget_assembly(budget):
@@ -37,8 +38,13 @@ def savings_percentages_of_buget(budget, savings):
 
 @login_required
 def dashboard(request):
-    budget = Budget.objects.filter(user=request.user)
-    spendings = Spending.objects.filter(user=request.user)
+    current_month = datetime.now().month
+    current_year = datetime.now().year
+    currency = Currency.objects.filter(user=request.user)
+    budget = Budget.objects.filter(
+        user=request.user, date_created__year=current_year, date_created__month=current_month)
+    spendings = Spending.objects.filter(
+        user=request.user, date_created__year=current_year, date_created__month=current_month)
     total_budget = round(budget_assembly(budget), 2)
     total_spendings = round(spendings_assembly(spendings), 2)
     total_savings = round(total_budget - total_spendings, 2)
@@ -54,6 +60,7 @@ def dashboard(request):
         'savings_percent': savings_percent,
         'spendings': spendings,
         'budget': budget,
+        'currency': currency,
     }
     return render(request, 'users/dashboard.html', context)
 
@@ -85,26 +92,26 @@ def tasks(request, pk):
 @login_required
 def profile(request):
     if request.method == 'POST':
-        budget_form = BudgetForm(request.POST, instance=request.user.budget)
+        c_form = CurrencyForm(request.POST, instance=request.user.currency)
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,
                                    request.FILES,
                                    instance=request.user.profile)
-        if u_form.is_valid() and p_form.is_valid() and budget_form.is_valid():
-            budget_form.save()
+        if u_form.is_valid() and p_form.is_valid() and c_form.is_valid():
+            c_form.save()
             u_form.save()
             p_form.save()
             messages.success(request, f'Your account has been updated!')
             return redirect('profile')
     else:
-        budget_form = BudgetForm(instance=request.user.budget)
+        c_form = CurrencyForm(instance=request.user.currency)
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
 
     context = {
-        'budget_form': budget_form,
         'u_form': u_form,
         'p_form': p_form,
+        'c_form': c_form,
         'title': 'Profile',
     }
     return render(request, 'users/profile.html', context)
@@ -201,3 +208,10 @@ def delete_task(request, pk):
         'id': note_id,
     }
     return render(request, 'users/delete_task.html', context)
+
+
+@login_required
+def add_budget(request):
+    Budget.objects.create(
+        user=request.user, amount=request.POST['budget_amount'])
+    return redirect('dashboard')

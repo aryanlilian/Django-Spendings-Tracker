@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import Profile, Budget, Task
+from .models import Profile, Currency, Task
 
 
 class CreateUserForm(UserCreationForm):
@@ -40,13 +40,15 @@ class ProfileUpdateForm(forms.ModelForm):
         fields = ['image']
 
 
-class BudgetForm(forms.ModelForm):
+class CurrencyForm(forms.ModelForm):
+
     class Meta:
-        model = Budget
+        model = Currency
         exclude = ['user']
 
 
 class TaskForm(forms.ModelForm):
+
     class Meta:
         model = Task
         exclude = ['note']
