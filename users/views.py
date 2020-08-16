@@ -65,6 +65,43 @@ def dashboard(request):
     return render(request, 'users/dashboard.html', context)
 
 
+def archive(request):
+    if request.method == 'POST':
+        currency = Currency.objects.filter(user=request.user)
+        year = datetime.strptime(request.POST.get('year'), '%Y')
+        month = datetime.strptime(request.POST.get('month'), '%m')
+        spendings = Spending.objects.filter(user=request.user, date_created__year=year.year,
+                                            date_created__month=month.month)
+        budget = Budget.objects.filter(
+            user=request.user, date_created__year=datetime.strptime(
+                request.POST.get('year'), '%Y').year,
+            date_created__month=datetime.strptime(request.POST.get('month'), '%m').month)
+        total_spendings = round(spendings_assembly(spendings), 2)
+        total_budget = round(budget_assembly(budget), 2)
+        total_savings = round(total_budget - total_spendings)
+    else:
+        currency = Currency.objects.filter(user=request.user)
+        spendings = Spending.objects.filter(user=request.user)
+        budget = Budget.objects.filter(user=request.user)
+        total_spendings = round(spendings_assembly(spendings), 2)
+        total_budget = round(budget_assembly(budget), 2)
+        total_savings = round(total_budget - total_spendings)
+        year = False
+        month = False
+    context = {
+        'title': 'Archive',
+        'spendings': spendings,
+        'budget': budget,
+        'currency': currency,
+        'total_spendings': total_spendings,
+        'total_budget': total_budget,
+        'total_savings': total_savings,
+        'year': year,
+        'month': month,
+    }
+    return render(request, 'users/archive.html', context)
+
+
 @login_required
 def notes(request):
     notes = Note.objects.filter(user=request.user)
