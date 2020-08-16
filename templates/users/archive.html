@@ -1,4 +1,4 @@
-<!-- {% extends 'blog/base.html' %}
+{% extends 'blog/base.html' %}
 {% block content %}
 	<div class="container">
 		<form method="POST" action="{% url 'archive' %}">
@@ -35,14 +35,40 @@
 			</div>
 			<input type="submit" name="result" value="See the Archive" class="btn btn-warning btn-lg btn-block">
 		</form>
+		<br>
 		<div class="row">
 			<div class="col">
-				<h4>Spendings List</h4>
+				{% if total_budget %}
+					<h5>Total Budget Archive: {{ total_budget }}</h5>
+				{% else %}
+					<h5>You didn't had any budgets on {{ year|date:"Y" }} - {{ month|date:"F" }}</h5>
+				{% endif %}
+			</div>
+			<div class="col">
+				{% if total_spendings %}
+					<h5>Total Spendings Archive: {{ total_spendings }}</h5>
+				{% else %}
+					<h5>You didn't had any spendings on {{ year|date:"Y" }} - {{ month|date:"F" }}</h5>
+				{% endif %}
+			</div>
+			<div class="col">
+				{% if total_savings %}
+					<h5>Total Savings Archive: {{ total_savings }}</h5>
+				{% else %}
+					<h5>You didn't had any savings on {{ year|date:"Y" }} - {{ month|date:"F" }}</h5>
+				{% endif %}
+			</div>
+		</div>
+		<hr>
+		<br>
+		<div class="row">
+			<div class="col">
+				<h4>Spendings Archive List</h4>
 				<hr>
 				<table class="table table-hover">
 					<thead class="thead-dark">
 						<tr>
-							{% for sum in budget %}
+							{% for sum in currency %}
 							<th>Name</th>
 							<th>Category</th>
 							<th>Amount ({{ sum.currency }})</th>
@@ -60,6 +86,26 @@
 					{% endfor %}
 				</table>
 			</div>
+			<div class="col">
+				<h4>Budget Archive List</h4>
+				<hr>
+				<table class="table table-hover">
+					<thead class="thead-dark">
+						<tr>
+							{% for sum in currency %}
+							<th>Amount ({{ sum.currency }})</th>
+							<th>Date Created</th>
+							{% endfor %}
+						</tr>
+					</thead>
+					{% for sum in budget %}
+						<tr>
+							<td>{{ sum.amount }}</td>
+							<td>{{ sum.date_created|date:"F-d-Y" }}</td>
+						</tr>
+					{% endfor %}
+				</table>
+			</div>
 		</div>
 	</div>
-{% endblock content %} -->
+{% endblock content %}
