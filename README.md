@@ -19,7 +19,9 @@ Login-Page:
 ![](README-images/login.png)
 
 Profile-Page:
-![](README-images/profile.png)
+![](README-images/profile-1.png)
+
+![](README-images/profile-2.png)
 
 Dashboard-Page:
 ![](README-images/dashboard.png)
@@ -36,4 +38,6 @@ Notes-Page:
 Tasks-Page:
 ![](README-images/tasks.png)
 
+Archive-Page:
+![](README-images/archive.png)
 
