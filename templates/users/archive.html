@@ -1,0 +1,65 @@
+<!-- {% extends 'blog/base.html' %}
+{% block content %}
+	<div class="container">
+		<form method="POST" action="{% url 'archive' %}">
+			{% csrf_token %}
+			<div class="input-group mb-3">
+			  <div class="input-group-prepend">
+			    <label class="input-group-text" for="inputGroupSelect01">Year</label>
+			  </div>
+			  <select name="year" class="custom-select" id="inputGroupSelect01">
+			    <option value="2017">2017</option>
+			    <option value="2018">2018</option>
+			    <option value="2019">2019</option>
+			    <option value="2020">2020</option>
+			  </select>
+			</div>
+			<div class="input-group mb-3">
+			  <select name="month" class="custom-select" id="inputGroupSelect02">
+			    <option value="01">January</option>
+			    <option value="02">February</option>
+			    <option value="03">March</option>
+			    <option value="04">April</option>
+			    <option value="05">May</option>
+			    <option value="06">June</option>
+			    <option value="07">July</option>
+			    <option value="08">August</option>
+			    <option value="09">September</option>
+			    <option value="10">October</option>
+			    <option value="11">November</option>
+			    <option value="12">December</option>
+			  </select>
+			  <div class="input-group-append">
+			    <label class="input-group-text" for="inputGroupSelect02">Month</label>
+			  </div>
+			</div>
+			<input type="submit" name="result" value="See the Archive" class="btn btn-warning btn-lg btn-block">
+		</form>
+		<div class="row">
+			<div class="col">
+				<h4>Spendings List</h4>
+				<hr>
+				<table class="table table-hover">
+					<thead class="thead-dark">
+						<tr>
+							{% for sum in budget %}
+							<th>Name</th>
+							<th>Category</th>
+							<th>Amount ({{ sum.currency }})</th>
+							<th>Date Created</th>
+							{% endfor %}
+						</tr>
+					</thead>
+					{% for spending in spendings %}
+						<tr>
+							<td>{{ spending.name }}</td>
+							<td>{{ spending.category }}</td>
+							<td>{{ spending.amount }}</td>
+							<td>{{ spending.date_created|date:"F-d-Y" }}</td>
+						</tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock content %} -->

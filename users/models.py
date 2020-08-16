@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.template.defaultfilters import slugify
 
 
 class Profile(models.Model):
@@ -8,10 +9,20 @@ class Profile(models.Model):
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
 
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return f'{self.user.username}\'s Profile'
 
 
 class Budget(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    amount = models.FloatField()
+    date_created = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'{self.user.username}\'s Budget'
+
+
+class Currency(models.Model):
+
     CURRENCY = (
         ('AED', 'AED'),
         ('AUD', 'AUD'),
@@ -52,12 +63,10 @@ class Budget(models.Model):
     )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    amount = models.FloatField(default=0.0)
-    currency = models.CharField(
-        max_length=100, choices=CURRENCY, default='USD')
+    currency = models.CharField(max_length=4, choices=CURRENCY, default='USD')
 
     def __str__(self):
-        return f'{self.user.username} Budget'
+        return f'{self.user.username}\'s Currency'
 
 
 class Spending(models.Model):
@@ -68,7 +77,7 @@ class Spending(models.Model):
     date_created = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.name
+        return f'{self.user.username}\'s {self.name}'
 
 
 class Note(models.Model):
@@ -78,7 +87,7 @@ class Note(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return f'{self.user.username}\'s {self.title}'
 
 
 class Task(models.Model):
