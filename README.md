@@ -1,9 +1,9 @@
 # Electronic-Spendings-Tracker
-_I've built this website because I want to help a lot of people to manage their funds more efficiently and to have a lot of savings every month, in order to start some small business or make a lot of investments._
+_I've built this website because I want to help a lot of people to manage their funds more efficiently and have a lot of savings every month, in order to start some small business or make a lot of investments._
 
-    The website has a Profile-Page where you can set some personal information and you're personally currency of your personal wallet on the site. 
+    The Profile-Page is the pagw where users can set or update personal information and the currency of the wallet.
 
-    The dashboard page is the page where you can add every time you want personalized spending and budget. All the spendings and budget have a total and you get your current total automatically with our website every time you add new spending or budget. The total savings = your total budget - total spendings. On the Dashboard-Page you can see also how much of your budget are the spendings and the savings (in percentages). 
+    The Dashboard-Page is the page where you can add every time you want personalized spendings and budgets. All the spendings and budgets have a total and you get your current total automatically with our website every time you add a new spending or budget. The total savings = your total budgets - total spendings. On the Dashboard-Page you can see also how much of your budget are the spendings and the savings (in percentages). 
 
     The Blog-Page is a page where you can read a lot of posts about money or how to manage them better and make savings, investments, etc. Also on this page for every post, you can write a comment and discuss it with other users on the website. 
 
