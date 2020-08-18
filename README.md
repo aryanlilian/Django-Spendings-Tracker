@@ -11,7 +11,7 @@ Recently I've added a new feature that consists of making notes list and every l
 
 Archive-Page is a new update, practically you can see all your spendings, budgets, and savings from a specific year and month, as an archive. All the information are selected from the database to make the user experience more efficient
 
-_Features that I implemented so far:_
+*_Features that I implemented so far:_
     * Google API (Login with Google)
     * Facebook API (Login with Facebook)
     * GitHub API (Login with GitHub)
