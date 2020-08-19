@@ -23,6 +23,8 @@ Profile-Page:
 
 ![](README-images/profile-2.png)
 
+![Admin-Profile-Page](README-images/admin-profile.png)
+
 Dashboard-Page:
 ![](README-images/dashboard.png)
 

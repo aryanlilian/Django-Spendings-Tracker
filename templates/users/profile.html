@@ -8,7 +8,11 @@
       <div class="media ">
         <img id="image-size" class="rounded-circle account-img" src="{{ user.profile.image.url }}">
         <div class="media-body">
-          <h2 class="account-heading">{{ user.username }}</h2>
+          {% if user.is_superuser %}
+            <h2 class="account-heading">{{ user.username }} - <a href="http://localhost:8000/admin/" class="btn btn-md btn-primary">Admin</a></h2>
+          {% else %}
+            <h2 class="account-heading">{{ user.username }}</h2>
+          {% endif %}
           <p class="text-secondary">{{ user.email }}</p>
         </div>
       </div>

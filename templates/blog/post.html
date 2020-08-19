@@ -32,10 +32,13 @@
 			      <small class="text-muted">{{ comment.date_posted|date:"F d, Y" }}</small>
 			    </div>
 			    <p class="article-content">{{ comment.comment_text }}</p>
-			    {% ifequal comment.user request.user %}
+			    {% if user.is_superuser %}
 			    	<a href="{% url 'delete-comment' comment.id %}" class="btn btn-sm btn-danger">Delete</a>
 			    	<a href="{% url 'update-comment' comment.id %}" class="btn btn-sm btn-success">Modify</a>
-			    {% endifequal %}
+			    {% elif comment.user == user %}
+			    	<a href="{% url 'delete-comment' comment.id %}" class="btn btn-sm btn-danger">Delete</a>
+			    	<a href="{% url 'update-comment' comment.id %}" class="btn btn-sm btn-success">Modify</a>
+			    {% endif %}
 			  </div>
 			</article>
 		{% endfor %}
