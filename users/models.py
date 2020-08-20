@@ -14,7 +14,10 @@ class Profile(models.Model):
 
 class Budget(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    category = models.CharField(max_length=100)
     amount = models.FloatField()
+    recurrent = models.BooleanField(default=False)
     date_created = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -74,6 +77,7 @@ class Spending(models.Model):
     name = models.CharField(max_length=100)
     category = models.CharField(max_length=100)
     amount = models.FloatField()
+    recurrent = models.BooleanField(default=False)
     date_created = models.DateTimeField(default=timezone.now)
 
     def __str__(self):

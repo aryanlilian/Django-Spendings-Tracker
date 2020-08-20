@@ -172,9 +172,13 @@ def register_page(request):
 
 
 @login_required
-def create_spending(request):
-    Spending.objects.create(user=request.user, name=request.POST['spending_name'],
-                            category=request.POST['category'], amount=request.POST['amount'])
+def add_spending(request):
+    if request.POST.get('recurrent_spending', False):
+        Spending.objects.create(user=request.user, name=request.POST['spending_name'], category=request.POST[
+                                'spending_category'], amount=request.POST['spending_amount'], recurrent=True)
+    else:
+        Spending.objects.create(user=request.user, name=request.POST['spending_name'],
+                                category=request.POST['spending_category'], amount=request.POST['spending_amount'])
     return redirect('dashboard')
 
 
@@ -249,6 +253,10 @@ def delete_task(request, pk):
 
 @login_required
 def add_budget(request):
-    Budget.objects.create(
-        user=request.user, amount=request.POST['budget_amount'])
+    if request.POST.get('recurrent_budget', False):
+        Budget.objects.create(user=request.user, name=request.POST['budget_name'], category=request.POST[
+                              'budget_category'], amount=request.POST['budget_amount'], recurrent=True)
+    else:
+        Budget.objects.create(
+            user=request.user, name=request.POST['budget_name'], category=request.POST['budget_category'], amount=request.POST['budget_amount'])
     return redirect('dashboard')

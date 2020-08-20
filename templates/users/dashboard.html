@@ -9,7 +9,7 @@
 					<div class="card text-center text-white  mb-3" id="buget">
 					  	<div class="card-header">
 					  		{% for sum in currency %}
-					  			<h5 class="card-title" id="blue-color">Budget ({{ sum.currency }})</h5>
+					  			<h5 class="card-title" id="blue-color">Total Budget ({{ sum.currency }})</h5>
 					  		{% endfor %}
 					  	</div>
 					  	<div class="card-body">
@@ -27,7 +27,7 @@
 					<div class="card text-center text-white  mb-3" id="spendings">
 					  	<div class="card-header">
 					  		{% for sum in currency %}
-					  			<h5 class="card-title" id="red-color">Spendings ({{ sum.currency }})</h5>
+					  			<h5 class="card-title" id="red-color">Total Spendings ({{ sum.currency }})</h5>
 					  		{% endfor %}
 					  	</div>
 					  	<div class="card-body">
@@ -45,7 +45,7 @@
 					<div class="card text-center text-white  mb-3" id="savings">
 					  	<div class="card-header">
 					  		{% for sum in currency %}
-					  			<h5 class="card-title" id="green-color">Savings ({{ sum.currency }})</h5>
+					  			<h5 class="card-title" id="green-color">Total Savings ({{ sum.currency }})</h5>
 					  		{% endfor%}
 					  	</div>
 					  	<div class="card-body">
@@ -60,23 +60,27 @@
 			</div>
 		</div> 
 		<hr>
-		<form id="form-center" action="{% url 'create-spending' %}" method="POST">
+		<form id="form-center" action="{% url 'add-spending' %}" method="POST">
 			{% csrf_token %}
 			<div class="form-row">
-			    <div class="form-group col-md-4">
+			    <div class="form-group col-md-3">
 			      <input type="text" class="form-control" name="spending_name" placeholder="Spending name">
 			    </div>
 			    <div class="form-group col-md-3">
-			      <input type="text" class="form-control" name="amount" placeholder="Spending amount">
+			      <input type="text" class="form-control" name="spending_amount" placeholder="Spending amount">
 			    </div>
-			    <div class="form-group col-md-3">
-			      <select name="category" class="form-control">
+			    <div class="form-group col-md-2">
+			      <select name="spending_category" class="form-control">
 			        	<option value="Groceries">Groceries</option>
 						<option value="Shopping">Shopping</option>
 						<option value="Rent">Rent</option>
 						<option value="Invoices">Invoices</option>
 						<option value="Others">Others</option>
 			      </select>
+			    </div>
+			    <div class="form-group col-md-2">
+			    	<input type="checkbox" id="recurrent-spending" name="recurrent_spending" value="True">
+			    	<label for="recurrent-spending">Recurrent</label>
 			    </div>
 			    <div class="form-group col-md-2">
 			    	<input type="submit" class="btn btn-warning" value="Add Spending">
@@ -86,8 +90,23 @@
 		<form id="form-center" action="{% url 'add-budget' %}" method="POST">
 			{% csrf_token %}
 			<div class="form-row">
-			    <div class="form-group col-md-10">
+			    <div class="form-group col-md-3">
+			      <input type="text" class="form-control" name="budget_name" placeholder="Budget name">
+			    </div>
+			    <div class="form-group col-md-3">
 			      <input type="text" class="form-control" name="budget_amount" placeholder="Budget amount">
+			    </div>
+			    <div class="form-group col-md-2">
+			      <select name="budget_category" class="form-control">
+			        	<option value="Salary">Salary</option>
+						<option value="Bonus">Bonus</option>
+						<option value="Gift">Gift</option>
+						<option value="Others">Others</option>
+			      </select>
+			    </div>
+			    <div class="form-group col-md-2">
+			    	<input type="checkbox" id="recurrent-budget" name="recurrent_budget" value="True">
+			    	<label for="recurrent-budget">Recurrent</label>
 			    </div>
 			    <div class="form-group col-md-2">
 			    	<input type="submit" class="btn btn-primary" value="Add Budget">
@@ -97,7 +116,7 @@
 		<a href="{% url 'archive' %}" class="btn btn-secondary btn-lg btn-block">Archive</a>
 		<br>
 		<div class="row">
-			<div class="col">
+			<div class="col-md-7">
 				<h4>Spendings List</h4>
 				<hr>
 				<table class="table table-hover">
@@ -107,6 +126,7 @@
 								<th>Name</th>
 								<th>Category</th>
 								<th>Amount ({{ sum.currency }})</th>
+								<th>Recurrent</th>
 								<th>Date Created</th>
 								<th>Remove</th>
 							{% endfor %}
@@ -117,6 +137,11 @@
 							<td>{{ spending.name }}</td>
 							<td>{{ spending.category }}</td>
 							<td>{{ spending.amount }}</td>
+							{% if spending.recurrent == True %}
+								<td>Yes</td>
+							{% else %}
+								<td>No</td>
+							{% endif %}
 							<td>{{ spending.date_created|date:"F-d-Y" }}</td>
 							<td>
 								<a class="btn btn-sm btn-danger" href="{% url 'delete-spending' spending.id %}">Delete</a>
@@ -125,7 +150,7 @@
 					{% endfor %}
 				</table>
 			</div>
-			<div class="col">
+			<div class="col-md-5">
 				<h4>Percentages of Budget</h4>
 				<hr>
 				<table class="table">
